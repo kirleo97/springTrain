@@ -1,9 +1,8 @@
 package com.example.sweater.domain;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 
-@Entity // This tells Hibernate to make a table out of this class. Hibernate automatically translates the entity into a table.
+@Entity
 public class Message {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,13 +19,21 @@ public class Message {
     }
 
     public Message(String text, String tag, User user) {
+        this.author = user;
         this.text = text;
         this.tag = tag;
-        this.author = user;
     }
 
     public String getAuthorName() {
         return author != null ? author.getUsername() : "<none>";
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public void setText(String text) {
@@ -51,13 +58,5 @@ public class Message {
 
     public void setTag(String tag) {
         this.tag = tag;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
     }
 }
